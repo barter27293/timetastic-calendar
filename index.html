@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- JS Dependencies -->
+    <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script data-require="moment.js@*" data-semver="2.14.1" src="https://npmcdn.com/moment@2.14.1"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/fullcalendar.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/fullcalendar.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  </head>
+
+  <body>
+
+<!--Main layout-->
+<main>
+    <div class="container-fluid">
+
+        <!--Section: Main panel-->
+        <div class="card">
+
+            <div class="card-header">
+                Holidays
+            </div>
+
+            <div class="card-body">
+
+            <div id="calendar" style="width: 100%; height: 80vh;"></div>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  // Fetch our events
+  $.ajax({
+      url: "fetch_json.php",
+    method: "GET",
+    datatype: "json"
+
+  }).done(function(response) {
+    // Parse our events into an event object for FullCalendar
+    var events = [];
+    $.each(response, function(idx, e) {
+      events.push({
+        start: e.startDate,
+        end: e.endDate,
+        title: e.userName,
+        color: e.color
+      });
+    });
+    
+    $('#calendar').fullCalendar({
+      events: events,
+      displayEventTime: false,
+      height: "parent",
+      weekends: false
+    });
+  });
+});
+
+    </script>
+
+        </div>
+
+        </div>
+        <!--Section: Main panel-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+  <!-- Footer -->
+  <footer class="page-footer font-small">
+
+  </footer>
+  <!-- Footer -->
+
+</body>
